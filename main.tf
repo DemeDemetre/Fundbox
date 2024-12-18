@@ -4,8 +4,10 @@ provider "aws" {
 
 resource "aws_key_pair" "ec2_key" {
   key_name   = "my-ec2-key"
-  public_key = file("/root/Fundbox/Fundbox/ssh-key/id_rsa.pub")
+  public_key = var.ssh_public_key
 }
+
+variable "ssh_public_key" {}
 
 resource "aws_instance" "flask_app" {
   ami           = "ami-0c02fb55956c7d316" # Amazon Linux 2 AMI
