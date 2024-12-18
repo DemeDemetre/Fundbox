@@ -1,0 +1,19 @@
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Ignore Terraform crash log files
+crash.log
+
+# Ignore Terraform plan files
+*.tfplan
+
+# Ignore Terraform variables file (if contains sensitive data)
+*.tfvars
+
+# Ignore .terraform directory (Terraform cache and modules)
+.terraform/
+.terraform.lock.hcl
+
+# Exclude the SSH key directory
+ssh-key/

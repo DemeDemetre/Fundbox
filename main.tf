@@ -2,10 +2,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
+resource "aws_key_pair" "ec2_key" {
+  key_name   = "my-ec2-key"
+  public_key = file("/root/Fundbox/Fundbox/ssh-key/id_rsa.pub")
+}
+
 resource "aws_instance" "flask_app" {
   ami           = "ami-0c02fb55956c7d316" # Amazon Linux 2 AMI
   instance_type = "t2.micro"
-  
+  key_name      = aws_key_pair.ec2_key.key_name
   security_groups = [aws_security_group.flask_sg.name]
 
   tags = {
@@ -15,6 +20,13 @@ resource "aws_instance" "flask_app" {
 
 resource "aws_security_group" "flask_sg" {
   name_prefix = "flask-sg-"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Open to all IPs; restrict in production environments
+  }
 
   ingress {
     from_port   = 5000
