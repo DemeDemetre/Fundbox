@@ -51,7 +51,8 @@ jobs:
       - name: Get EC2 Public IP
         id: get_ip
         run: |
-          echo "EC2_PUBLIC_IP=$(terraform output -raw public_ip)" >> $GITHUB_ENV
+          PUBLIC_IP=$(terraform output -raw public_ip | tr -d '\r')
+          echo "EC2_PUBLIC_IP=${PUBLIC_IP}" >> $GITHUB_ENV
 
       # Step 6: SSH into EC2 instance and deploy the application
       - name: Deploy Flask App to EC2
