@@ -17,7 +17,7 @@ variable "ssh_public_key" {}
 resource "aws_instance" "flask_app" {
   ami           = "ami-0c02fb55956c7d316" # Amazon Linux 2 AMI
   instance_type = "t2.micro"
-  key_name      = aws_key_pair.ec2_key.key_name
+  key_name      =  length(aws_key_pair.ec2_key) > 0 ? aws_key_pair.ec2_key[0].key_name : data.aws_key_pair.existing.key_name
   security_groups = [aws_security_group.flask_sg.name]
 
   tags = {
