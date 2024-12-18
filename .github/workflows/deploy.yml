@@ -81,6 +81,6 @@ jobs:
 
             # Pull and deploy the Dockerized Flask application
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/flask-aws-app:latest
-            sudo docker stop flask-app || true
-            sudo docker rm flask-app || true
+            # sudo docker stop flask-app || true
+            # sudo docker rm flask-app || true
             sudo docker run -d -p 5000:5000 --name flask-app ${{ secrets.DOCKER_USERNAME }}/flask-aws-app:latest
