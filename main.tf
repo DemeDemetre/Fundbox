@@ -2,8 +2,13 @@ provider "aws" {
   region = "us-east-1"
 }
 
+data "aws_key_pair" "existing" {
+  key_name = "my-ec2-key"
+}
+
 resource "aws_key_pair" "ec2_key" {
   key_name   = "my-ec2-key"
+  count      = length(data.aws_key_pair.existing.id == "" ? [1] : [])
   public_key = var.ssh_public_key
 }
 
